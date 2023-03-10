@@ -1,0 +1,101 @@
+@import './base.scss';
+
+#app {
+  /* max-width: 1280px; */
+  // min-height: 100vh;
+  margin: 0 auto;
+  font-weight: normal;
+  // display: flex;
+  // padding: 20px;
+  padding-left: 260px;
+}
+
+a {
+  text-decoration: none;
+  transition: 0.4s;
+}
+
+.el-button a {
+  color: inherit;
+}
+
+/* 侧边栏 */
+.sidebar {
+  display: block;
+  width: 240px;
+  padding-bottom: 80px;
+  background-color: var(--sidebar-bg);
+  border-radius: var(--border-radius-large);
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  height: calc(100vh - 40px);
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .logo {
+    font-weight: normal;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    height: 60px;
+
+    img {
+      font-size: 0;
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+  }
+}
+
+// 主体内容
+.main {
+  overflow-y: scroll;
+  height: calc(100vh - 0px);
+  padding: 20px 30px 4px;
+}
+
+// 分页
+.list-pagination {
+  text-align: right;
+
+  .el-pagination {
+    display: inline-flex;
+  }
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  &-align-top {
+    align-items: flex-start;
+  }
+
+  &-1 {
+    flex: 1;
+  }
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+  /* body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  } */
+}
