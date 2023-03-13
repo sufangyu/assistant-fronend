@@ -98,11 +98,13 @@ export const usePipChart = () => {
         avoidLabelOverlap: false,
         itemStyle: {
           borderRadius: 5,
+          borderColor: 'transparent',
         },
         label: {
-          // FIXME: 偶尔被裁剪
-          formatter(param: { name?: string; percent?: number; }) {
-            return param.name + " (" + param.percent! * 1 + "%)";
+          // FIXME: 偶尔被裁剪（根据字符长度处理是否换行）
+          formatter(param: { name: string; value: number; percent: number; }) {
+            return `${param.name}: ${param.value}`;
+            // return param.name + " (" + param.percent! * 1 + "%)";
           },
           show: true,
         },
