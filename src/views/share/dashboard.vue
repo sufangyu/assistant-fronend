@@ -117,7 +117,7 @@ import { ThemeEnum } from '@/enum'
 import { useBarLineChart, usePipChart } from '@/hooks'
 import { dataTrend, percentPip, recentTotal, dataYearOverYear } from '@/api/share'
 import type { DataTrendType } from '@/types'
-import { transformTotal } from '@/utils'
+import { transformTotal } from '@/core/utils'
 
 const themeStore = useThemeStore()
 const theme = computed(() => {

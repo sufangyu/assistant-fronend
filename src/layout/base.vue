@@ -133,8 +133,8 @@ const handleLogout = () => {
 }
 
 // 菜单
-const curRole = authStore.account?.role;
-const menus = ref<{ routerName: string; active: string; icon: any; label: string}[]>([
+const curRole = authStore.account?.role
+const menus = ref<{ routerName: string; active: string; icon: any; label: string }[]>([
   {
     routerName: 'ShareCreate',
     active: '/share/create',
@@ -146,17 +146,17 @@ const menus = ref<{ routerName: string; active: string; icon: any; label: string
     active: '/share/filed',
     icon: Find,
     label: '分享归档'
-  },
-]);
+  }
+])
 
 const MAIN_MENUS = [
-   {
+  {
     routerName: 'ShareList',
     active: '/share/list',
     icon: ListView,
     label: '分享列表'
-  },
-];
+  }
+]
 
 const ROOT_MENUS = [
   {
@@ -195,17 +195,16 @@ const ROOT_MENUS = [
     icon: PeoplesTwo,
     label: '用户管理'
   }
-];
-
+]
 
 onMounted(() => {
   if (curRole === RoleTypeEnum.AUTHOR) {
-    menus.value.push(...MAIN_MENUS);
+    menus.value.push(...MAIN_MENUS)
   }
   if (curRole === RoleTypeEnum.ROOT) {
-    menus.value.push(...ROOT_MENUS);
+    menus.value.push(...ROOT_MENUS)
   }
-});
+})
 </script>
 
 <style lang="scss" scoped>

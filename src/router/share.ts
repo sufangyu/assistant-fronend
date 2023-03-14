@@ -32,7 +32,7 @@ export const shareRouters: RouteRecordRaw[] = [
         name: 'ShareFiled',
         component: () => import('@/views/share/filed.vue'),
         meta: {
-          title: '分享归档',
+          title: '分享归档'
           // auth: true,
           // roles: [RoleTypeEnum.ROOT, RoleTypeEnum.AUTHOR]
         }

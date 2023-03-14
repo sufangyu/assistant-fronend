@@ -21,4 +21,3 @@ app.use(ElementPlus, { locale: zhCn, size: 'default' })
 app.component('PageHeader', PageHeader).component('Panel', Panel)
 
 app.mount('#app')
-

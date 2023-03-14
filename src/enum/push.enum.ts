@@ -2,14 +2,14 @@
 export enum PushResultEnum {
   /** 失败 */
   FAIL = 0,
-  /** 正常 */
+  /** 成功 */
   SUCCESS = 1
 }
 
 /** 推送结果描述 */
 export const PushResultMessage = {
   0: '失败',
-  1: '正常'
+  1: '成功'
 }
 
 /** 推送结果类型 */

@@ -4,8 +4,7 @@ import type { AxiosResponse } from 'axios'
 import type { IRequestConfig, IResponse } from './types'
 import helper from './help'
 import { useAuthStore } from '@/stores'
-import router from '@/router';
-
+import router from '@/router'
 
 // 缓存请求对象, 用于取消重复请求
 const cacheRequestPromise: { [key: string]: any } = {}
@@ -215,7 +214,7 @@ export async function handleResponseError(error: {
   if (status && status === 401) {
     const authStore = useAuthStore()
     authStore.logout()
-    router.replace('/login');
+    router.replace('/login')
     return Promise.reject(error)
   }
 

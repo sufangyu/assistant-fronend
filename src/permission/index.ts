@@ -38,7 +38,7 @@ router.beforeEach(
         console.log(err)
       }
     }
-    
+
     if (to.name === 'Login') {
       next('/')
     } else if (to?.meta?.auth) {
