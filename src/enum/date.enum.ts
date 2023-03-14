@@ -16,5 +16,5 @@ export const MonthTypeMessage = {
   9: '九月',
   10: '十月',
   11: '十一月',
-  12: '十二月',
+  12: '十二月'
 }

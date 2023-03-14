@@ -3,13 +3,7 @@
 
   <panel>
     <div class="flex flex-align-top">
-      <el-form
-        ref="ruleFormRef"
-        :model="query"
-        label-width="40px"
-        class="flex-1"
-        status-icon
-      >
+      <el-form ref="ruleFormRef" :model="query" label-width="40px" class="flex-1" status-icon>
         <el-row :gutter="16">
           <el-col :sm="24" :md="12" :lg="8">
             <el-form-item label="分类" prop="categoryId">
@@ -87,7 +81,7 @@
           <div class="extra">
             <h3>分类</h3>
             <p>
-              <el-tag type="" round size="small">{{ item.category?.name ?? "-" }}</el-tag>
+              <el-tag type="" round size="small">{{ item.category?.name ?? '-' }}</el-tag>
             </p>
           </div>
         </el-col>
@@ -96,13 +90,7 @@
           <div class="extra">
             <h3>标签</h3>
             <p class="tags">
-              <el-tag
-                v-for="tag in item.tags ?? []"
-                type="info"
-                round
-                size="small"
-                :key="tag.id"
-              >
+              <el-tag v-for="tag in item.tags ?? []" type="info" round size="small" :key="tag.id">
                 {{ tag.name }}
               </el-tag>
             </p>
@@ -112,7 +100,7 @@
         <el-col :span="4">
           <div class="extra">
             <h3>创建时间</h3>
-            <p class="created">{{ dayjs(item.createdAt).format("YYYY-MM-DD HH:mm") }}</p>
+            <p class="created">{{ dayjs(item.createdAt).format('YYYY-MM-DD HH:mm') }}</p>
           </div>
         </el-col>
 

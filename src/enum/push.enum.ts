@@ -3,30 +3,28 @@ export enum PushResultEnum {
   /** 失败 */
   FAIL = 0,
   /** 正常 */
-  SUCCESS = 1,
+  SUCCESS = 1
 }
 
 /** 推送结果描述 */
 export const PushResultMessage = {
   0: '失败',
-  1: '正常',
-};
+  1: '正常'
+}
 
 /** 推送结果类型 */
-export type PushResultType = keyof typeof PushResultMessage;
+export type PushResultType = keyof typeof PushResultMessage
 
 // 推送功能模块
 export enum PushResultModuleEnum {
   /** 分享模块 */
-  SHARE = 'share',
+  SHARE = 'share'
 }
-
-
 
 // 推送功能模块描述
 export enum PushResultModuleMessage {
-  share = '分享模块',
+  share = '分享模块'
 }
 
 /** 推送结果类型 */
-export type PushResultModuleType = keyof typeof PushResultModuleMessage;
+export type PushResultModuleType = keyof typeof PushResultModuleMessage

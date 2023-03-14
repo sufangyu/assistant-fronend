@@ -3,6 +3,9 @@ import axios from 'axios'
 import type { AxiosResponse } from 'axios'
 import type { IRequestConfig, IResponse } from './types'
 import helper from './help'
+import { useAuthStore } from '@/stores'
+import router from '@/router';
+
 
 // 缓存请求对象, 用于取消重复请求
 const cacheRequestPromise: { [key: string]: any } = {}
@@ -18,6 +21,7 @@ const isEmptyObject = (obj: any) => JSON.stringify(obj) === '{}'
  */
 export function handleRequestDefault(config: IRequestConfig): IRequestConfig {
   const METHOD = config.method!.toLocaleUpperCase()
+  const authStore = useAuthStore()
 
   if (config.loading) {
     if (['POST', 'PUT'].includes(METHOD)) {
@@ -25,6 +29,10 @@ export function handleRequestDefault(config: IRequestConfig): IRequestConfig {
     }
     const message = config.loadingMessage
     helper.showFullScreenLoading(message)
+  }
+
+  if (authStore.token) {
+    config.headers!.Authorization = authStore.token
   }
 
   return config
@@ -203,10 +211,13 @@ export async function handleResponseError(error: {
   const errorMessage = `${status ? `${status} - ` : ''}${error.message}`
   helper.showMessage(errorMessage)
 
-  // // TODO: 处理登录过期 & 没有权限的逻辑
-  // if (status && status === 401) {
-  //   return Promise.reject(data);
-  // }
+  // TODO: 处理登录过期 & 没有权限的逻辑
+  if (status && status === 401) {
+    const authStore = useAuthStore()
+    authStore.logout()
+    router.replace('/login');
+    return Promise.reject(error)
+  }
 
   // eslint-disable-next-line prefer-promise-reject-errors
   return Promise.reject({

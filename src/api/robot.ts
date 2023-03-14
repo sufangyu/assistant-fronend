@@ -58,7 +58,6 @@ export function removeRobot(id: number) {
   return http.delete({ url: `/robot/${id}`, loadingMessage: '正在删除...' })
 }
 
-
 /**
  * 停用/启用
  *
@@ -67,5 +66,5 @@ export function removeRobot(id: number) {
  * @return {*}
  */
 export function toggleRobotStatus(id: number, status: StatusType) {
-  return http.patch({ url: `/robot/status/${id}`, data: { status} });
+  return http.patch({ url: `/robot/status/${id}`, data: { status } })
 }

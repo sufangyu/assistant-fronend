@@ -1,22 +1,12 @@
 <template>
-  <page-header>{{ IS_EDIT ? "编辑分享" : "创建分享" }}</page-header>
+  <page-header>{{ IS_EDIT ? '编辑分享' : '创建分享' }}</page-header>
 
   <panel>
-    <el-form
-      ref="ruleFormRef"
-      :model="ruleForm"
-      :rules="rules"
-      label-width="80px"
-      status-icon
-    >
+    <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="80px" status-icon>
       <el-form-item label="链接地址" prop="url">
         <div class="flex">
           <div class="flex-1">
-            <el-input
-              v-model="ruleForm.url"
-              :disabled="IS_EDIT"
-              placeholder="请输入链接地址"
-            />
+            <el-input v-model="ruleForm.url" :disabled="IS_EDIT" placeholder="请输入链接地址" />
           </div>
           <el-button style="margin-left: 8px" type="primary" @click="handleGetWebInfo"
             >获取站点信息</el-button
@@ -33,11 +23,7 @@
       </el-form-item>
 
       <el-form-item label="所属分类" prop="categoryId">
-        <el-select
-          v-model="ruleForm.categoryId"
-          placeholder="请选择分类"
-          style="width: 100%"
-        >
+        <el-select v-model="ruleForm.categoryId" placeholder="请选择分类" style="width: 100%">
           <el-option
             v-for="category in formOptions.categories"
             :key="category.id"
@@ -66,11 +52,7 @@
 
       <el-form-item label="机器人" prop="robotIds">
         <el-checkbox-group v-model="ruleForm.robotIds" :disabled="IS_EDIT">
-          <el-checkbox
-            v-for="robot in formOptions.robots"
-            :key="robot.id"
-            :label="robot.id"
-          >
+          <el-checkbox v-for="robot in formOptions.robots" :key="robot.id" :label="robot.id">
             {{ robot.name }}
           </el-checkbox>
         </el-checkbox-group>

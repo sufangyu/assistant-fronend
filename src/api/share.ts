@@ -1,5 +1,12 @@
 import http from '@/core/http'
-import type { Share, ListResult, ShareQuery, RecentTotalRes, DataTrendType, YearOverYearType } from '@/types'
+import type {
+  Share,
+  ListResult,
+  ShareQuery,
+  RecentTotalRes,
+  DataTrendType,
+  YearOverYearType
+} from '@/types'
 
 /**
  * 创建/修改分享内容
@@ -65,17 +72,16 @@ export function getWebsiteInfo(url: string) {
   })
 }
 
-
 /**
  * 近2年、2个月的数据汇总对比
  *
  * @export
  * @param {('year' | 'month')} type
- * @return {*} 
+ * @return {*}
  */
 export function recentTotal(type: 'year' | 'month') {
   return http.get<RecentTotalRes>({
-    url: `/share/total/${type}`,
+    url: `/share/total/${type}`
   })
 }
 
@@ -84,24 +90,23 @@ export function recentTotal(type: 'year' | 'month') {
  *
  * @export
  * @param {DataTrendType} type
- * @return {*} 
+ * @return {*}
  */
 export function dataTrend(type: DataTrendType) {
   return http.get<any>({
     url: `/share/trend`,
     params: {
-      type,
+      type
     }
   })
 }
-
 
 /**
  * 数据同比（季度、月度）
  *
  * @export
  * @param {DataTrendType} type
- * @return {*} 
+ * @return {*}
  */
 export function dataYearOverYear(type: YearOverYearType) {
   return http.get<any>({
@@ -115,14 +120,13 @@ export function dataYearOverYear(type: YearOverYearType) {
  *
  * @export
  * @param {('category' | 'robot' | 'tag')} type
- * @return {*} 
+ * @return {*}
  */
 export function percentPip(type: 'category' | 'robot' | 'tag') {
-  return http.get<{ name: string; value: number | string}[]>({
-    url: `/share/pip/${type}`,
+  return http.get<{ name: string; value: number | string }[]>({
+    url: `/share/pip/${type}`
   })
 }
-
 
 /**
  * 按归类查询分享内容
@@ -130,14 +134,14 @@ export function percentPip(type: 'category' | 'robot' | 'tag') {
  * @export
  * @param {string} year
  * @param {('quarter' | 'month')} type
- * @return {*} 
+ * @return {*}
  */
 export function findShareByFiled(year: string, type: 'quarter' | 'month') {
-  return http.get<{ type: string; label: string; list: Share[];}[]>({
+  return http.get<{ type: string; label: string; list: Share[] }[]>({
     url: `/share/filed`,
     params: {
       year,
-      type,
-    },
+      type
+    }
   })
 }

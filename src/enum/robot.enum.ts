@@ -16,4 +16,4 @@ export const RobotTypeMessage = {
 }
 
 /** 机器人类型 */
-export type RobotType = keyof typeof RobotTypeMessage;
+export type RobotType = keyof typeof RobotTypeMessage

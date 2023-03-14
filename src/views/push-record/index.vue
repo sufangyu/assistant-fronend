@@ -3,13 +3,7 @@
 
   <panel>
     <div class="flex flex-align-top">
-      <el-form
-        ref="ruleFormRef"
-        :model="query"
-        label-width="40px"
-        class="flex-1"
-        status-icon
-      >
+      <el-form ref="ruleFormRef" :model="query" label-width="40px" class="flex-1" status-icon>
         <el-row :gutter="16">
           <el-col :sm="24" :md="12" :lg="12">
             <el-form-item label="状态" prop="result">
@@ -19,12 +13,7 @@
                 placeholder="选择推送状态"
                 style="width: 100%"
               >
-                <el-option
-                  v-for="(k, v) in PushResultMessage"
-                  :key="k"
-                  :label="k"
-                  :value="v"
-                />
+                <el-option v-for="(k, v) in PushResultMessage" :key="k" :label="k" :value="v" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -66,17 +55,12 @@
         </el-col>
 
         <el-col :span="6">
-          <div class="extra">
-            推送时间: {{ dayjs(item.createdAt).format("YYYY-MM-DD HH:mm") }}
-          </div>
+          <div class="extra">推送时间: {{ dayjs(item.createdAt).format('YYYY-MM-DD HH:mm') }}</div>
         </el-col>
 
         <el-col :span="5">
           <div class="extra">
-            <el-tag
-              size="small"
-              :type="item.result === PushResultEnum.FAIL ? 'danger' : undefined"
-            >
+            <el-tag size="small" :type="item.result === PushResultEnum.FAIL ? 'danger' : undefined">
               {{ PushResultMessage[item.result!] }}
             </el-tag>
           </div>
@@ -119,7 +103,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, type FormInstance } from 'element-plus'
 import dayjs from 'dayjs'
 import type { PushRecordQuery, PushRecord } from '@/types'
-import {  PushResultMessage, PushResultEnum, PushResultModuleMessage } from '@/enum'
+import { PushResultMessage, PushResultEnum, PushResultModuleMessage } from '@/enum'
 import { getPushRecordList, repushRecord } from '@/api/push-record'
 
 const ruleFormRef = ref<FormInstance>()
@@ -160,7 +144,7 @@ const handleQuery = async (page: number = 1) => {
 }
 
 const handleRepush = async (record: PushRecord) => {
-  console.log('record: ', record);
+  console.log('record: ', record)
 
   await repushRecord(record)
   // 提示 + 刷新页面（TODO: 考虑最后一页问题）
@@ -169,10 +153,9 @@ const handleRepush = async (record: PushRecord) => {
     type: 'success',
     duration: 1500,
     onClose: async () => {
-      await handleQuery();
+      await handleQuery()
     }
   })
-
 }
 
 onMounted(async () => {

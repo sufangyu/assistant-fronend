@@ -3,13 +3,7 @@
 
   <panel>
     <div class="flex flex-align-top">
-      <el-form
-        ref="ruleFormRef"
-        :model="query"
-        label-width="40px"
-        class="flex-1"
-        status-icon
-      >
+      <el-form ref="ruleFormRef" :model="query" label-width="40px" class="flex-1" status-icon>
         <el-row :gutter="16">
           <el-col :sm="24" :md="12" :lg="6">
             <el-form-item label="名称" prop="name">
@@ -24,12 +18,7 @@
                 placeholder="选择状态"
                 style="width: 100%"
               >
-                <el-option
-                  v-for="(k, v) in StatusMessage"
-                  :key="k"
-                  :label="k"
-                  :value="v"
-                />
+                <el-option v-for="(k, v) in StatusMessage" :key="k" :label="k" :value="v" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -41,12 +30,7 @@
                 placeholder="选择机器人类型"
                 style="width: 100%"
               >
-                <el-option
-                  v-for="(k, v) in RobotTypeMessage"
-                  :key="k"
-                  :label="k"
-                  :value="v"
-                />
+                <el-option v-for="(k, v) in RobotTypeMessage" :key="k" :label="k" :value="v" />
               </el-select>
             </el-form-item>
           </el-col>
@@ -72,9 +56,7 @@
   </panel>
 
   <panel title="标签列表">
-    <template #extra
-      ><el-button type="success" @click="handleManage()">新建</el-button></template
-    >
+    <template #extra><el-button type="success" @click="handleManage()">新建</el-button></template>
     <el-divider style="margin-top: 0" />
 
     <el-empty v-if="list.length === 0" :image-size="120" />
@@ -86,9 +68,7 @@
         </el-col>
 
         <el-col :span="6">
-          <div class="extra">
-            创建: {{ dayjs(item.createdAt).format("YYYY-MM-DD HH:mm") }}
-          </div>
+          <div class="extra">创建: {{ dayjs(item.createdAt).format('YYYY-MM-DD HH:mm') }}</div>
         </el-col>
 
         <el-col :span="5">
@@ -204,18 +184,17 @@ const handleConfirmRemove = async (id: number) => {
 
 const handleToggle = async (robot: Robot) => {
   // console.log(robot);
-  const status = robot.status === StatusEnum.NORMAL ? StatusEnum.FORBIDDEN : StatusEnum.NORMAL;
-  console.log(status);
+  const status = robot.status === StatusEnum.NORMAL ? StatusEnum.FORBIDDEN : StatusEnum.NORMAL
+  console.log(status)
 
-  await toggleRobotStatus(robot.id!, status);
+  await toggleRobotStatus(robot.id!, status)
   ElMessage({
     type: 'success',
     message: '操作成功',
-    duration: 1000,
-  });
-  handleQuery();
+    duration: 1000
+  })
+  handleQuery()
 }
-
 
 const handleManage = (id?: number) => {
   manegeDrawerRef.value?.handleOpen(id)

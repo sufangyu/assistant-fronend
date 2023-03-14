@@ -18,6 +18,5 @@ export const StatusNextMessage = {
   1: '停用'
 }
 
-
 /** 状态类型 */
-export type StatusType = keyof typeof StatusMessage;
+export type StatusType = keyof typeof StatusMessage

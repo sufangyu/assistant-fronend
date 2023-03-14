@@ -8,7 +8,7 @@ import Panel from '@/components/panel.vue'
 
 import App from './App.vue'
 import router from './router'
-
+import './permission'
 import './assets/main.scss'
 
 const app = createApp(App)
@@ -21,3 +21,4 @@ app.use(ElementPlus, { locale: zhCn, size: 'default' })
 app.component('PageHeader', PageHeader).component('Panel', Panel)
 
 app.mount('#app')
+

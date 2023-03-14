@@ -51,7 +51,7 @@ class Helper {
 
   /** 显示全局 loading */
   showMessage(message: string) {
-    ElMessage.closeAll();
+    ElMessage.closeAll()
     this.showErrorMessage(message)
   }
 

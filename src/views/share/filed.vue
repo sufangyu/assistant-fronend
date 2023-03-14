@@ -3,13 +3,7 @@
 
   <panel>
     <div class="flex flex-align-top">
-      <el-form
-        ref="ruleFormRef"
-        :model="query"
-        label-width="80px"
-        class="flex-1"
-        status-icon
-      >
+      <el-form ref="ruleFormRef" :model="query" label-width="80px" class="flex-1" status-icon>
         <el-row :gutter="16">
           <el-col :sm="24" :md="12" :lg="12">
             <el-form-item label="归档年份" prop="year">
@@ -25,11 +19,7 @@
           </el-col>
           <el-col :sm="24" :md="12" :lg="12">
             <el-form-item label="归档类型" prop="tagIds">
-              <el-select
-                v-model="query.type"
-                placeholder="选择归档类型"
-                style="width: 100%"
-              >
+              <el-select v-model="query.type" placeholder="选择归档类型" style="width: 100%">
                 <el-option label="季度" value="quarter" />
                 <el-option label="月度" value="month" />
               </el-select>
@@ -63,9 +53,9 @@
           class="share-item"
         >
           <h4>
-            <a :href="listItem.url" target="_blank">{{ listItem.title || "-" }}</a>
+            <a :href="listItem.url" target="_blank">{{ listItem.title || '-' }}</a>
           </h4>
-          <p class="description">{{ listItem.description || "-" }}</p>
+          <p class="description">{{ listItem.description || '-' }}</p>
           <p class="created-at">发布于 {{ listItem.createdAt }}</p>
         </el-card>
       </el-timeline-item>
@@ -74,36 +64,36 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from "vue";
-import type { FormInstance } from "element-plus";
-import dayjs from "dayjs";
-import { findShareByFiled } from "@/api/share";
-import type { Share, ShareFiledQuery } from "@/types";
-import { QuarterTypeMessage, MonthTypeMessage } from "@/enum";
+import { onMounted, reactive, ref } from 'vue'
+import type { FormInstance } from 'element-plus'
+import dayjs from 'dayjs'
+import { findShareByFiled } from '@/api/share'
+import type { Share, ShareFiledQuery } from '@/types'
+import { QuarterTypeMessage, MonthTypeMessage } from '@/enum'
 
-const ruleFormRef = ref<FormInstance>();
+const ruleFormRef = ref<FormInstance>()
 const query = reactive<ShareFiledQuery>({
-  year: dayjs().format("YYYY"),
-  type: "quarter",
-});
+  year: dayjs().format('YYYY'),
+  type: 'quarter'
+})
 
-const list = ref<{ type: string; label: string; list: Share[] }[]>([]);
+const list = ref<{ type: string; label: string; list: Share[] }[]>([])
 // 获取列表数据
 const getShareByFiled = async () => {
-  const { data } = await findShareByFiled(query.year!, query.type!);
+  const { data } = await findShareByFiled(query.year!, query.type!)
   list.value = (data ?? []).map((it) => {
     it.label =
-      it.type === "quarter"
+      it.type === 'quarter'
         ? (QuarterTypeMessage as any)[it.label]
-        : (MonthTypeMessage as any)[it.label];
+        : (MonthTypeMessage as any)[it.label]
 
-    return it;
-  });
-};
+    return it
+  })
+}
 
 onMounted(async () => {
-  await getShareByFiled();
-});
+  await getShareByFiled()
+})
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,6 @@
 /* color palette from <https://github.com/vuejs/theme> */
 @import './theme-dark.scss';
 
-
 :root {
   @include theme-light;
   --border-radius-base: 4px;
@@ -10,13 +9,13 @@
   --border-radius-small: calc(1 * var(--border-radius-base));
 }
 
-:root[data-theme=dark] {
+:root[data-theme='dark'] {
   @include theme-dark;
 }
 
 // 跟随系统
 @media (prefers-color-scheme: dark) {
-  :root[data-theme=system] {
+  :root[data-theme='system'] {
     @include theme-dark;
   }
 }
@@ -26,7 +25,7 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
-  position: relative;
+  // position: relative;
   font-weight: normal;
 }
 

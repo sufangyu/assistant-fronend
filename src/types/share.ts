@@ -33,14 +33,13 @@ export interface ShareFiledQuery {
   type?: 'quarter' | 'month'
 }
 
-
 /** 近2年、2月的数据汇总对比 */
 export interface RecentTotalRes {
-  prev: number;
-  current: number;
-  type: 'year' | 'month';
+  prev: number
+  current: number
+  type: 'year' | 'month'
 }
 
-export type DataTrendType = "7day" | "14day" | "30day";
+export type DataTrendType = '7day' | '14day' | '30day'
 
-export type YearOverYearType = 'quarter' | 'month';
+export type YearOverYearType = 'quarter' | 'month'
