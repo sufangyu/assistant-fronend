@@ -3,7 +3,13 @@
 
   <panel>
     <div class="flex flex-align-top">
-      <el-form ref="ruleFormRef" :model="query" label-width="40px" class="flex-1" status-icon>
+      <el-form
+        ref="ruleFormRef"
+        :model="query"
+        label-width="40px"
+        class="flex-1"
+        status-icon
+      >
         <el-row :gutter="16">
           <el-col :sm="24" :md="12" :lg="12">
             <el-form-item label="状态" prop="result">
@@ -13,7 +19,12 @@
                 placeholder="选择推送状态"
                 style="width: 100%"
               >
-                <el-option v-for="(k, v) in PushResultMessage" :key="k" :label="k" :value="v" />
+                <el-option
+                  v-for="(k, v) in PushResultMessage"
+                  :key="k"
+                  :label="k"
+                  :value="v"
+                />
               </el-select>
             </el-form-item>
           </el-col>
@@ -55,12 +66,17 @@
         </el-col>
 
         <el-col :span="6">
-          <div class="extra">推送时间: {{ dayjs(item.createdAt).format('YYYY-MM-DD HH:mm') }}</div>
+          <div class="extra">
+            推送时间: {{ dayjs(item.createdAt).format("YYYY-MM-DD HH:mm") }}
+          </div>
         </el-col>
 
         <el-col :span="5">
           <div class="extra">
-            <el-tag size="small" :type="item.result === PushResultEnum.FAIL ? 'danger' : undefined">
+            <el-tag
+              size="small"
+              :type="item.result === PushResultEnum.FAIL ? 'danger' : undefined"
+            >
               {{ PushResultMessage[item.result!] }}
             </el-tag>
           </div>
@@ -69,7 +85,7 @@
         <el-col :span="5">
           <div class="actions">
             <el-button
-              v-if="item.result === PushResultEnum.FAIL"
+              v-if="item.result === PushResultEnum.FAIL && hasAuth([RoleTypeEnum.ROOT])"
               size="small"
               type="success"
               @click="handleRepush(item)"
@@ -103,8 +119,9 @@ import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, type FormInstance } from 'element-plus'
 import dayjs from 'dayjs'
 import type { PushRecordQuery, PushRecord } from '@/types'
-import { PushResultMessage, PushResultEnum, PushResultModuleMessage } from '@/enum'
+import { PushResultMessage, PushResultEnum, PushResultModuleMessage, RoleTypeEnum } from '@/enum'
 import { getPushRecordList, repushRecord } from '@/api/push-record'
+import { hasAuth } from '@/core/utils'
 
 const ruleFormRef = ref<FormInstance>()
 const query = reactive<PushRecordQuery>({

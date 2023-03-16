@@ -3,7 +3,13 @@
 
   <panel>
     <div class="flex flex-align-top">
-      <el-form ref="ruleFormRef" :model="query" label-width="40px" class="flex-1" status-icon>
+      <el-form
+        ref="ruleFormRef"
+        :model="query"
+        label-width="40px"
+        class="flex-1"
+        status-icon
+      >
         <el-row :gutter="16">
           <el-col :sm="24" :md="12" :lg="12">
             <el-form-item label="名称" prop="name">
@@ -32,7 +38,14 @@
   </panel>
 
   <panel title="分类列表">
-    <template #extra><el-button type="success" @click="handleManage()">新建</el-button></template>
+    <template #extra>
+      <el-button
+        v-if="hasAuth([RoleTypeEnum.ROOT])"
+        type="success"
+        @click="handleManage()"
+        >新建</el-button
+      >
+    </template>
     <el-divider style="margin-top: 0" />
 
     <el-empty v-if="list.length === 0" :image-size="120" />
@@ -44,7 +57,9 @@
         </el-col>
 
         <el-col :span="6">
-          <div class="extra">创建时间: {{ dayjs(item.createdAt).format('YYYY-MM-DD HH:mm') }}</div>
+          <div class="extra">
+            创建时间: {{ dayjs(item.createdAt).format("YYYY-MM-DD HH:mm") }}
+          </div>
         </el-col>
 
         <el-col :span="4">
@@ -90,6 +105,8 @@ import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, type FormInstance } from 'element-plus'
 import dayjs from 'dayjs'
 import type { CategoryQuery, Category } from '@/types'
+import { RoleTypeEnum } from '@/enum'
+import { hasAuth } from '@/core/utils'
 import { getCategoryList, removeCategory } from '@/api/category'
 import Manage from './manage.vue'
 
