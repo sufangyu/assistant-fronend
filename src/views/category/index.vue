@@ -3,13 +3,7 @@
 
   <panel>
     <div class="flex flex-align-top">
-      <el-form
-        ref="ruleFormRef"
-        :model="query"
-        label-width="40px"
-        class="flex-1"
-        status-icon
-      >
+      <el-form ref="ruleFormRef" :model="query" label-width="40px" class="flex-1" status-icon>
         <el-row :gutter="16">
           <el-col :sm="24" :md="12" :lg="12">
             <el-form-item label="名称" prop="name">
@@ -39,10 +33,7 @@
 
   <panel title="分类列表">
     <template #extra>
-      <el-button
-        v-if="hasAuth([RoleTypeEnum.ROOT])"
-        type="success"
-        @click="handleManage()"
+      <el-button v-if="hasAuth([RoleTypeEnum.ROOT])" type="success" @click="handleManage()"
         >新建</el-button
       >
     </template>
@@ -57,9 +48,7 @@
         </el-col>
 
         <el-col :span="6">
-          <div class="extra">
-            创建时间: {{ dayjs(item.createdAt).format("YYYY-MM-DD HH:mm") }}
-          </div>
+          <div class="extra">创建时间: {{ dayjs(item.createdAt).format('YYYY-MM-DD HH:mm') }}</div>
         </el-col>
 
         <el-col :span="4">
