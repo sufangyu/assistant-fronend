@@ -3,7 +3,13 @@
 
   <panel>
     <div class="flex flex-align-top">
-      <el-form ref="ruleFormRef" :model="query" label-width="60px" class="flex-1" status-icon>
+      <el-form
+        ref="ruleFormRef"
+        :model="query"
+        label-width="60px"
+        class="flex-1"
+        status-icon
+      >
         <el-row :gutter="16">
           <el-col :sm="24" :md="12" :lg="6">
             <el-form-item label="用户名" prop="username">
@@ -18,7 +24,12 @@
                 placeholder="选择状态"
                 style="width: 100%"
               >
-                <el-option v-for="(k, v) in StatusMessage" :key="k" :label="k" :value="v" />
+                <el-option
+                  v-for="(k, v) in StatusMessage"
+                  :key="k"
+                  :label="k"
+                  :value="v"
+                />
               </el-select>
             </el-form-item>
           </el-col>
@@ -30,7 +41,12 @@
                 placeholder="选择用户角色"
                 style="width: 100%"
               >
-                <el-option v-for="(k, v) in RoleTypeMessage" :key="k" :label="k" :value="v" />
+                <el-option
+                  v-for="(k, v) in RoleTypeMessage"
+                  :key="k"
+                  :label="k"
+                  :value="v"
+                />
               </el-select>
             </el-form-item>
           </el-col>
@@ -70,11 +86,13 @@
         </el-col>
 
         <el-col :span="6">
-          <div class="extra">手机号：{{ item.mobile ?? '-' }}</div>
+          <div class="extra">手机号：{{ item.mobile ?? "-" }}</div>
         </el-col>
 
         <el-col :span="6">
-          <div class="extra">创建: {{ dayjs(item.createdAt).format('YYYY-MM-DD HH:mm') }}</div>
+          <div class="extra">
+            创建: {{ dayjs(item.createdAt).format("YYYY-MM-DD HH:mm") }}
+          </div>
         </el-col>
 
         <el-col :span="2">
@@ -100,7 +118,7 @@
             <el-popconfirm
               width="200"
               title="你确认重置密码吗?"
-              @confirm="handleConfirmResetPassword(item.id!, item.username)"
+              @confirm="handleConfirmResetPassword(item.id!, item.username!)"
             >
               <template #reference>
                 <el-button size="small" text type="warning">重置密码</el-button>
@@ -155,7 +173,9 @@
     <p style="margin-bottom: 8px">{{ dialogResultText }}</p>
     <p>
       初始密码是：{{ initPassword }}
-      <el-button size="small" type="success" @click="copyText(initPassword)"> 复制 </el-button>
+      <el-button size="small" type="success" @click="copyText(initPassword)">
+        复制
+      </el-button>
     </p>
     <template #footer>
       <el-button type="primary" @click="handleCloseDialog">刷新列表</el-button>

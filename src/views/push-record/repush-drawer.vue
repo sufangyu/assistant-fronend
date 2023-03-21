@@ -17,19 +17,24 @@
       </el-table-column>
       <el-table-column label="结果" width="140">
         <template #default="{ row }">
-          <el-tag :type="row.result === PushResultEnum.FAIL ? 'danger' : ''" disable-transitions>
+          <el-tag
+            :type="row.result === PushResultEnum.FAIL ? 'danger' : ''"
+            disable-transitions
+          >
             {{ PushResultMessage[row.result as 0 | 1] }}
           </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="推送时间" width="200">
         <template #default="{ row }">{{
-          dayjs(row.createdAt).format('YYYY-MM-DD HH:mm:ss')
+          dayjs(row.createdAt).format("YYYY-MM-DD HH:mm:ss")
         }}</template>
       </el-table-column>
     </el-table>
     <div style="margin-top: 16px" v-if="results.length > 0">
-      <el-button size="small" type="primary" @click="handleRepushAll()"> 重新推送 </el-button>
+      <el-button size="small" type="primary" @click="handleRepushAll()">
+        重新推送
+      </el-button>
     </div>
   </el-drawer>
 </template>
