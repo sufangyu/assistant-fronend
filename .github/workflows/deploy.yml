@@ -49,3 +49,6 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }} # 登录密钥
         source: ${{ secrets.SOURCE }} 
         target: ${{ secrets.TARGET }}
+        script: |
+          whoami
+          ls -al
