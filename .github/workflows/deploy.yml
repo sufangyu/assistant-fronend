@@ -42,7 +42,7 @@ jobs:
     - run: npm run build
     
     - name: 部署文件夹到服务器
-      uses: easingthemes/ssh-deploy@master
+      uses: easingthemes/ssh-deploy@main
       with:
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }} # 服务器 IP
         REMOTE_USER: ${{ secrets.REMOTE_USERNAME }} # 登录用户名
