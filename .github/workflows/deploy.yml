@@ -53,25 +53,13 @@ jobs:
         REMOTE_USER: ${{ secrets.REMOTE_USERNAME }} # 登录用户名
         SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }} # 登录密钥
         ARGS: "-avzr --delete"
-        SOURCE: ${{ secrets.SOURCE }} 
-        # TARGET: ${{ secrets.TARGET }}
-        TARGET: ./dist/release.tgz
+        SOURCE: "release.tgz"
+        TARGET: ${{ secrets.TARGET }}
         SCRIPT_BEFORE: |
           whoami
           ls -al
-        # 上传完成后执行命令 => cd: 要确保服务器有这个目录; tar: 解压; 启动服务
+        # 上传完成后执行命令: 进入项目目录 => 解压缩 => 拷贝资源到 dist 目录下 => 启动/重启 pm2（pm2开启watch不用这步骤）
         SCRIPT_AFTER: |
           cd ${{ secrets.SOURCE }}
           tar zxvf release.tgz
           yes | cp -r -f dist/* ./
-          
-#     # 重启服务（https://blog.51cto.com/youthfighter/4805540）
-#     - name: Server Reload
-#       uses: appleboy/ssh-action@master
-#       with:
-#         host: ${{ secrets.REMOTE_HOST }} # 服务器 IP
-#         username: ${{ secrets.REMOTE_USERNAME }} # 登录用户名
-#         key: ${{ secrets.PRIVATE_KEY }} # 登录密钥
-#         script: |
-#           whoami
-#           ls -al
