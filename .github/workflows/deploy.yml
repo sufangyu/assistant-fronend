@@ -22,6 +22,8 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - run: echo "${{ secrets.TARGET }}"
+    
     # 第一步：下载源码（CI/CD拉取代码到自己的本地）
     - name: Checkout code
       uses: actions/checkout@main
@@ -60,6 +62,6 @@ jobs:
           ls -al
         # 上传完成后执行命令: 进入项目目录 => 解压缩 => 拷贝资源到 dist 目录下 => 启动/重启 pm2（pm2开启watch不用这步骤）
         SCRIPT_AFTER: |
-          cd ${{ secrets.SOURCE }}
+          cd ${{ secrets.TARGET }}
           tar zxvf release.tgz
           yes | cp -r -f dist/* ./
