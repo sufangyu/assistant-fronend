@@ -5,7 +5,6 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-    
   # 手动运行
   workflow_dispatch:
     inputs:
@@ -16,9 +15,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [16.x]
@@ -46,6 +43,7 @@ jobs:
     - run: pnpm install
     - run: pnpm run build
     - run: tar -zcvf release.tgz dist # 把dist等文件，打包压缩为release.tgz
+    - run: ls
     
     # 第五步：部署到服务器
     - name: Deploy
@@ -57,7 +55,7 @@ jobs:
         ARGS: "-avzr --delete"
         SOURCE: ${{ secrets.SOURCE }} 
         # TARGET: ${{ secrets.TARGET }}
-        TARGET: /dist/release.tgz
+        TARGET: ./dist/release.tgz
         SCRIPT_BEFORE: |
           whoami
           ls -al
