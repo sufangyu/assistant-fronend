@@ -25,23 +25,30 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
+    # 第一步：下载源码（CI/CD拉取代码到自己的本地）
+    - name: Checkout code
+      uses: actions/checkout@main
     
-    - name: 安装 pnpm 环境
+    # 第二步：安装 pnpm 环境
+    - name: Install pnpm
       uses: pnpm/action-setup@v2.0.1
       with:
         version: 7.29.1
           
-    - name: 设置 Node.js ${{ matrix.node-version }} 环境
+    # 设置 Node.js 版本环境
+    - name: Setting Node.js Version ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
-        
-    - run: pnpm install
-    - run: npm run build
     
-    - name: 部署文件夹到服务器
+    # 安装依赖、打包、压缩
+    - run: pnpm install
+    - run: pnpm run build
+    - run: tar -zcvf release.tgz dist # 把dist等文件，打包压缩为release.tgz
+    
+    # 第五步：部署到服务器
+    - name: Deploy
       uses: easingthemes/ssh-deploy@main
       with:
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }} # 服务器 IP
@@ -49,18 +56,24 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }} # 登录密钥
         ARGS: "-avzr --delete"
         SOURCE: ${{ secrets.SOURCE }} 
-        TARGET: ${{ secrets.TARGET }}
+        # TARGET: ${{ secrets.TARGET }}
+        TARGET: /dist/release.tgz
         SCRIPT_BEFORE: |
           whoami
           ls -al
+        # 上传完成后执行命令 => cd: 要确保服务器有这个目录; tar: 解压; 启动服务
+        SCRIPT_AFTER: |
+          cd ${{ secrets.SOURCE }}
+          tar zxvf release.tgz
+          yes | cp -r -f dist/* ./
           
-    # 重启服务（https://blog.51cto.com/youthfighter/4805540）
-    - name: Server Reload
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.REMOTE_HOST }} # 服务器 IP
-        username: ${{ secrets.REMOTE_USERNAME }} # 登录用户名
-        key: ${{ secrets.PRIVATE_KEY }} # 登录密钥
-        script: |
-          whoami
-          ls -al
+#     # 重启服务（https://blog.51cto.com/youthfighter/4805540）
+#     - name: Server Reload
+#       uses: appleboy/ssh-action@master
+#       with:
+#         host: ${{ secrets.REMOTE_HOST }} # 服务器 IP
+#         username: ${{ secrets.REMOTE_USERNAME }} # 登录用户名
+#         key: ${{ secrets.PRIVATE_KEY }} # 登录密钥
+#         script: |
+#           whoami
+#           ls -al
