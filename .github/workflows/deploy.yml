@@ -9,9 +9,13 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag'
+        description: "Tag"
         required: false
-        default: 'v1.0.0'
+        default: "v1.0.0"
+        
+env:
+  SOURCE: "release.tgz"
+  TARGET: "/www/assistant-fronend"
 
 jobs:
   build:
@@ -22,7 +26,7 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - run: echo "${{ secrets.TARGET }}"
+    - run: echo "Source => $SOURCE; Target => $TARGET, "
     
     # 第一步：下载源码（CI/CD拉取代码到自己的本地）
     - name: Checkout code
@@ -55,13 +59,15 @@ jobs:
         REMOTE_USER: ${{ secrets.REMOTE_USERNAME }} # 登录用户名
         SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }} # 登录密钥
         ARGS: "-avzr --delete"
-        SOURCE: "release.tgz"
-        TARGET: ${{ secrets.TARGET }}
+#         SOURCE: "release.tgz"
+#         TARGET: ${{ secrets.TARGET }}
+        SOURCE: ${{ env.SOURCE }}
+        TARGET: ${{ env.TARGET }}
         SCRIPT_BEFORE: |
           whoami
           ls -al
         # 上传完成后执行命令: 进入项目目录 => 解压缩 => 拷贝资源到 dist 目录下 => 启动/重启 pm2（pm2开启watch不用这步骤）
         SCRIPT_AFTER: |
-          cd ${{ secrets.TARGET }}
+          cd ${{ env.TARGET }}
           tar zxvf release.tgz
           yes | cp -r -f dist/* ./
