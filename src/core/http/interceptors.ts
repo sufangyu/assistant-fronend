@@ -97,7 +97,8 @@ export function handleRequestDuplicate(config: IRequestConfig): IRequestConfig {
 export function handleRequestConfigUrl(config: IRequestConfig): IRequestConfig {
   // 处理完整 URL. 非 http, https 才处理
   const isExternal = /^(https?:)/.test(config.url!)
-  if (!isExternal) {
+  const API_BASE = import.meta.env.VITE_API_BASE
+  if (!isExternal && API_BASE.startsWith('http')) {
     const API_BASE = import.meta.env.VITE_API_BASE
     config.url = `${API_BASE}${config.url}`
   }
