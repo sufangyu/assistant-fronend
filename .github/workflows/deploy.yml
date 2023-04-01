@@ -5,49 +5,68 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-    
   # 手动运行
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag'
+        description: "Tag"
         required: false
-        default: 'v1.0.0'
+        default: "v1.0.0"
+
+# 自定义环境变量
+env:
+  SOURCE: "release.tgz"
+  TARGET: "/www/assistant-fronend"
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
+    - run: echo "Source => $SOURCE; Target => $TARGET, "
     
-    - name: 安装 pnpm 环境
+    # 第一步：下载源码（CI/CD拉取代码到自己的本地）
+    - name: Checkout code
+      uses: actions/checkout@main
+    
+    # 第二步：安装 pnpm 环境
+    - name: Install pnpm
       uses: pnpm/action-setup@v2.0.1
       with:
         version: 7.29.1
           
-    - name: 设置 Node.js ${{ matrix.node-version }} 环境
+    # 设置 Node.js 版本环境
+    - name: Setting Node.js Version ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
-        
+    
+    # 安装依赖、打包、压缩
     - run: pnpm install
-    - run: npm run build
+    - run: pnpm run build
+    - run: tar -zcvf release.tgz dist # 把dist等文件，打包压缩为release.tgz
+    - run: ls
     
-#     - name: 自动同步文件夹到我的服务器
-#       uses: wangyucode/sftp-upload-action@v1.1
-#       with:
-#         host: ${{ secrets.SERVER_IP }}  # nginx服务器公网ip
-#         port: ${{ secrets.SERVER_PORT }} # nginx服务器ssh端口
-#         username: ${{ secrets.USERNAME }} # nginx服务器用户名
-#         password: ${{ secrets.PASSWORD }} # nginx服务器密码
-#         localDir: "dist" # build好的文件的路径,每次服务器上会自动删除对应的文件夹后重新覆盖
-#         remoteDir: ${{ secrets.SERVER_DESTINATION }} # 要把build好的文件夹放到nginx服务器上的什么位置
-    
+    # 第五步：部署到服务器
+    - name: Deploy
+      uses: easingthemes/ssh-deploy@main
+      with:
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }} # 服务器 IP
+        REMOTE_USER: ${{ secrets.REMOTE_USERNAME }} # 登录用户名
+        SSH_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }} # 登录密钥
+        ARGS: "-avzr --delete"
+        SOURCE: ${{ env.SOURCE }}
+        TARGET: ${{ env.TARGET }}
+        SCRIPT_BEFORE: |
+          whoami
+          ls -al
+        # 上传完成后执行命令: 进入项目目录 => 解压缩 => 拷贝资源到 dist 目录下 => 启动/重启 pm2（pm2开启watch不用这步骤）
+        SCRIPT_AFTER: |
+          cd ${{ env.TARGET }}
+          tar zxvf ${{ env.SOURCE }}
+          yes | cp -r -f dist/* ./
